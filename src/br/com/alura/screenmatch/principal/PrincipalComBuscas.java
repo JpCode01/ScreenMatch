@@ -7,9 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class PrincipalComBuscas {
     public static void main(String[] args) throws IOException, InterruptedException {
+        Dotenv dotenv = Dotenv.load();
+        String apiKey = dotenv.get("API_KEY");
         Scanner leitura = new Scanner(System.in);
         String busca = "";
         List<Titulo> titulos = new ArrayList<>();
@@ -22,7 +25,7 @@ public class PrincipalComBuscas {
                 break;
             }
 
-            String endereco = "https://www.omdbapi.com/?t=" + busca.replace(" ", "+") + "&apikey=22c150b8";
+            String endereco = "https://www.omdbapi.com/?t=" + busca.replace(" ", "+") + apiKey;
             titulos.add(Deserializer.jsonToObj(endereco));
             SerializerWriter.objToJson(titulos);
         }
